@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="f16ac73f-64d4-4909-a2ac-168f566e4b74" >
+		<salesforce:cached-basic-connection username="anand.s@accenture.com" password="Mani123!!" securityToken="WwVypONLZFoiJvvSpTY8qKEfv" />
+	</salesforce:sfdc-config>
+	<http:listener-config name="system-layer-sfdc-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+    <apikit:config name="system-layer-sfdc-config" api="system-layer-sfdc.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<api-gateway:autodiscovery apiId="15818765" doc:name="API Autodiscovery" doc:id="607a7cf1-7f8e-43dc-a2e7-152f459ec8e9" flowRef="system-layer-sfdc-main" />
+	<configuration-properties doc:name="Configuration properties" doc:id="f95ab58d-2916-4d24-b313-7704f8ad68c3" file="config.yaml" />
+</mule>
